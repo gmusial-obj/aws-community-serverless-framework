@@ -37,4 +37,31 @@ Steps:
               WriteCapacityUnits: 1
     ```
     This creates a simple table for tasks
-    
+  11. Change `getTasks` method to fetch tasks from the table:
+      ```
+        'use strict';
+        
+        const AWS = require('aws-sdk');
+        const dynamo = new AWS.DynamoDB();
+        
+        module.exports.getTasks = async event => {
+          const tasks = await dynamo.scan({TableName: 'Tasks'}).promise();
+          return {
+            statusCode: 200,
+            body: JSON.stringify(
+              tasks,
+              null,
+              2
+            ),
+          };
+        };
+      ```
+      And it explodes with Internal Server error.
+  12. Go to CloudWatch and find a surprise:
+    ```
+    "errorType": "AccessDeniedException",
+        "errorMessage": "User: arn:aws:sts::{accountId}:assumed-role/aws-community-serverless-framework-dev-us-east-1-lambdaRole/aws-community-serverless-framework-dev-hello is not authorized to perform: dynamodb:Scan on resource: arn:aws:dynamodb:us-east-1:{accountId}:table/Tasks",
+        "code": "AccessDeniedException",
+    ```
+  
+  
