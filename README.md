@@ -6,3 +6,5 @@ Steps:
 3. For a simple AWS test just execute `aws s3 ls`
 4. Install serverless framweork globally using `npm install -g serverless`
 5. Run `serverless create --template aws-nodejs` with a proper template https://serverless.com/framework/docs/providers/aws/cli-reference/create#available-templates
+6. `create` command followed by `serverless deploy` sets up working lambda doing hello world with no external trigger. There should be three basic resources available in S3, CloudFormation and Lambda. By default in us-east-1 region
+7. `serverless.yml` is the backbone of the whole solution holding full configuration
