@@ -63,5 +63,28 @@ Steps:
         "errorMessage": "User: arn:aws:sts::{accountId}:assumed-role/aws-community-serverless-framework-dev-us-east-1-lambdaRole/aws-community-serverless-framework-dev-hello is not authorized to perform: dynamodb:Scan on resource: arn:aws:dynamodb:us-east-1:{accountId}:table/Tasks",
         "code": "AccessDeniedException",
     ```
-  
-  
+  13. Let's fix the rights by going to the commented out `iamRoleStatements` section. **EXTREMELY IMPORTANT** the identation needs to match `name` and `runtime` above. `iamRoleStatements` is a property of `provider`.
+      ```yaml
+      iamRoleStatements:
+        - Effect: "Allow"
+          Action:
+            - "dynamodb:Scan"
+          Resource: !GetAtt Tasks.Arn
+      ```
+14. execute `serverless deploy` and access API again. The response should look like this:
+     ```yaml
+        {
+          "Items": [
+            {
+              "ID": {
+                "S": "1"
+              },
+              "name": {
+                "S": "first"
+              }
+            }
+          ],
+          "Count": 1,
+          "ScannedCount": 1
+        }
+     ```
