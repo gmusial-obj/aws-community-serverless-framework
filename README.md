@@ -18,3 +18,23 @@ Steps:
     ```
    And change the handler to have `getTasks` and adjust `serverless.yml` accordingly
 9. Execute `serverless deploy` and observe carefully the console output. There should be the API endpoint URL available and even publicly available and working. Something like `GET - https://{some-id}.execute-api.us-east-1.amazonaws.com/dev/users`
+10. Uncomment resources section in `serverless.yml` and make it look like this
+    ```yaml
+    resources:
+      Resources:
+        Tasks:
+          Type: AWS::DynamoDB::Table
+          Properties:
+            AttributeDefinitions:
+              - AttributeName: ID
+                AttributeType: S
+            KeySchema:
+              - AttributeName: ID
+                KeyType: HASH
+            TableName: Tasks
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+    ```
+    This creates a simple table for tasks
+    
