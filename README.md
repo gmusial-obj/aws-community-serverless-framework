@@ -88,3 +88,12 @@ Steps:
           "ScannedCount": 1
         }
      ```
+ 12. Let's add some APi security now. We will click through and Create Amazon Cognito User pool with App Client and Hosted UI pointing to localhost. We will create a user and log in using credentials.
+ We will then capture authorization code and exchange it to token using `/oauth2/token` endpoint.
+ 13. Once cognito is created we extend our endpoint listener to contain Cognito authorizer
+    ```
+        authorizer:
+            name: aaa-auth
+            arn: arn:aws:cognito-idp:us-east-1:{accountId}:userpool/us-east-1_jNfHNFfCM
+    ```
+   14. Execute `serverless deploy` and enjoy secure API

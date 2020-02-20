@@ -67,6 +67,9 @@ functions:
       - http:
           path: tasks
           method: get
+          authorizer:
+            name: aaa-auth
+            arn: arn:aws:cognito-idp:us-east-1:617027658197:userpool/us-east-1_jNfHNFfCM
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
